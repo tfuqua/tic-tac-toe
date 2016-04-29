@@ -119,6 +119,7 @@ Game.prototype = {
       removeClasses(el, ["active", "player1", "player2"]);
     });
 
+    this.moves = 0;
     this.board = //ToDo update to support dynamic board size
     [[0, 0, 0],
      [0, 0, 0],
