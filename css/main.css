@@ -41,6 +41,12 @@
   width:100%;
   text-align:center;
 }
+.square.player1{
+  background:blue;
+}
+.square.player2{
+  background:red;
+}
 .square.player1:before{
   content:"X";
 }
