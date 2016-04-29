@@ -47,6 +47,7 @@ Game.prototype = {
       square.className += " active player" + this.turn;
       this.turns++;
       this.board[square.dataset.row][square.dataset.col] = this.turn;
+
       this.checkForWinner();
       this.turn = this.players[(this.gamesPlayed + this.turns) % 2]
     }
@@ -89,24 +90,20 @@ Game.prototype = {
       }
 
       //Check for Diagonal Winner
-      for (var i = 0; i < 3; i++){
         if (this.board[0][0] === this.turn &&
             this.board[1][1] === this.turn &&
             this.board[2][2] === this.turn){
               this.gameOver(this.turn);
               return;
             }
-      }
 
       //Check for Reverse Diagonal Winner
-      for (var i = 0; i < 3; i++){
         if (this.board[2][0] === this.turn &&
             this.board[1][1] === this.turn &&
             this.board[0][2] === this.turn){
               this.gameOver(this.turn);
               return;
             }
-      }
 
       if (this.turns === 9){
         this.gameOver("ties");
@@ -119,7 +116,7 @@ Game.prototype = {
       removeClasses(el, ["active", "player1", "player2"]);
     });
 
-    this.moves = 0;
+    this.turns = 0;
     this.board = //ToDo update to support dynamic board size
     [[0, 0, 0],
      [0, 0, 0],
