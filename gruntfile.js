@@ -3,6 +3,13 @@ module.exports = function(grunt) {
 	require('load-grunt-tasks')(grunt);
 
   grunt.initConfig({
+		eslint: {
+			options: {
+				fix: true,
+				format: './node_modules/eslint-friendly-formatter'
+			},
+			target: ['js/src/*.js']
+		},
       babel: {
           options: {
               sourceMap: true,
@@ -30,9 +37,17 @@ module.exports = function(grunt) {
 	                'css/dist/main.css': 'css/src/main.scss'
 	            }
 	        }
-	    }
+	    },
+			cssmin: {
+			  target: {
+			    files: {
+			      'css/dist/main.min.css': 'css/dist/main.css'
+			    }
+			  }
+			}
 
   });
 
-  grunt.registerTask('default', ['babel', 'uglify', 'sass']);
+  grunt.registerTask('default', ['babel', 'uglify', 'sass', 'cssmin']);
+	grunt.registerTask('lint', ['eslint']);
 };
