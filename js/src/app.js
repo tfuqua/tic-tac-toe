@@ -1,6 +1,5 @@
 class Game {
   constructor() {
-
     // Game Data
     this.players = [1, 2];
     this.ties = this.getScore('ties');
@@ -30,18 +29,20 @@ class Game {
   }
 
   initEvents() {
-    const _this = this;
+    const that = this;
 
-    this.squares.forEach((el, i) => {
-      el.addEventListener('click', function (ev) {
-        _this.checkSelection(this);
+    this.squares.forEach((el) => {
+      el.addEventListener('click', function squareClick() {
+        that.checkSelection(this);
       });
     });
   }
 
   checkSelection(square) {
-    if (!square.classList.contains('active')) {
-      square.className += ` active player${this.turn}`;
+    const activeSquare = square;
+
+    if (!activeSquare.classList.contains('active')) {
+      activeSquare.className += ` active player${this.turn}`;
       this.turns++;
       this.board[square.dataset.row][square.dataset.col] = this.turn;
 
@@ -61,13 +62,12 @@ class Game {
   }
 
   checkForWinner() {
-
     if (this.turns < 5) {
       return; // No possible for winner yet
     }
 
       // Check for Horizonal winner
-    for (var i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
       if (this.board[i][0] === this.turn &&
             this.board[i][1] === this.turn &&
             this.board[i][2] === this.turn) {
@@ -77,7 +77,7 @@ class Game {
     }
 
       // Check for Vertical winner
-    for (var i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
       if (this.board[0][i] === this.turn &&
             this.board[1][i] === this.turn &&
             this.board[2][i] === this.turn) {
@@ -110,7 +110,7 @@ class Game {
   reset() {
     this.setScoreboard();
 
-    this.squares.forEach((el, i) => {
+    this.squares.forEach((el) => {
       this.removeClasses(el, ['active', 'player1', 'player2']);
     });
 
@@ -119,8 +119,6 @@ class Game {
     [[0, 0, 0],
      [0, 0, 0],
      [0, 0, 0]];
-
-    console.log(this.board);
   }
 
   gameOver(player) {
@@ -130,16 +128,18 @@ class Game {
   }
 
   getScore(player) {
-    player = `player${player}`;// update for readable localStorage value
-    if (localStorage.getItem(player) === null) {
-      localStorage.setItem(player, 0);
+    let playerKey = player;
+    playerKey = `player${player}`;// update for readable localStorage value
+    if (localStorage.getItem(playerKey) === null) {
+      localStorage.setItem(playerKey, 0);
     }
-    return parseInt(localStorage.getItem(player));
+    return parseInt(localStorage.getItem(playerKey), 10);
   }
 
   updateScore(player, score) {
-    player = `player${player}`; // update for readable localStorage value
-    localStorage.setItem(player, score);
+    let playerKey = player;
+    playerKey = `player${player}`; // update for readable localStorage value
+    localStorage.setItem(playerKey, score);
     this.syncScores();
   }
 
@@ -154,6 +154,4 @@ class Game {
       el.classList.remove(classes[i]);
     }
   }
-}
-
-Game();
+};
